@@ -1,6 +1,6 @@
-Package: BCsim
+Package: BlockSim
 Version: 0.1-0
-Title: BlockChain simulation and research tools
+Title: Blockchain simulation and research tools
 Description: Provides several simulation and research tools for blockchain.
 Authors@R: c(person("Ling-Yun", "Wu", role = c("aut", "cre"), email =
     "wulingyun@gmail.com"))
@@ -9,7 +9,7 @@ Depends: R (>= 3.0.2)
 Imports: Matrix
 Suggests: 
 License: GPL (>= 2)
-BugReports: https://github.com/wulingyun/BCsim/issues
-URL: https://github.com/wulingyun/BCsim
+BugReports: https://github.com/wulingyun/BlockSim/issues
+URL: https://github.com/wulingyun/BlockSim
 RoxygenNote: 6.1.1
 Encoding: UTF-8

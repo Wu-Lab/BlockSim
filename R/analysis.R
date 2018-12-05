@@ -1,5 +1,3 @@
-
-
 #' Calculate block connectivity
 #'
 #'
@@ -16,4 +14,3 @@ block_connectivity <- function(adj_matrix)
   future <- colSums(x)
   list(con_mat = x, past = past, future = future)
 }
-
