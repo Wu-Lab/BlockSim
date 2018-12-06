@@ -2,7 +2,9 @@
 
 export(block_discords)
 export(block_distances)
+export(find_faithful_blocks)
 export(shortest_distances)
 export(simulate_blockchain)
 import(Matrix)
+import(igraph)
 useDynLib(BlockSim, .registration = TRUE)

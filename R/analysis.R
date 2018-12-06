@@ -1,3 +1,17 @@
+#' Find faithful blocks
+#'
+#' @import igraph
+#'
+#' @export
+find_faithful_blocks <- function(adj_matrix, max_discord = 10)
+{
+  d <- block_discords(adj_matrix)
+  d[d <= max_discord] <- 0
+  d[d > max_discord] <- 1
+  largest_ivs(graph_from_adjacency_matrix(d, mode = "undirected"))[[1]]
+}
+
+
 #' Calculate block distances
 #'
 #'
