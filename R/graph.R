@@ -16,12 +16,12 @@
 #' @import Matrix
 #' 
 #' @export
-get_shortest_distances <- function(adj_matrix, source_nodes = rep_len(TRUE, dim(adj_matrix)[1]))
+shortest_distances <- function(adj_matrix, source_nodes = rep_len(TRUE, dim(adj_matrix)[1]))
 {
   edges <- which(adj_matrix != 0, arr.ind = TRUE)
   edges <- edges[order(edges[,1]), ]
   index <- findInterval(0:dim(adj_matrix)[1], edges[,1])
-  dist <- .Call(BC_ShortestDistances, edges, index, source_nodes)
+  dist <- .Call(BS_ShortestDistances, edges, index, source_nodes)
   dist[dist == -1] <- Inf
   dist
 }

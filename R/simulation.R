@@ -1,5 +1,3 @@
-
-
 #' Simulate a blockchain
 #'
 #'
