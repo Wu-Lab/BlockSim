@@ -40,7 +40,7 @@ block_discords <- function(adj_matrix)
   {
     for (j in 1:(i-1))
     {
-      if (x[i, j] == Inf)
+      if (x[i, j] == Inf && x[j, i] == Inf)
         discords[i, j] <- discords[j, i] <- min(x[i, ] + x[j, ]) + min(x[, i] + x[, j], min(x[tips, i]) + min(x[tips, j]) + 2)
     }
   }
