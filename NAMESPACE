@@ -2,6 +2,8 @@
 
 export(block_discords)
 export(block_distances)
+export(estimate_block_distance)
+export(estimate_growth_rate)
 export(find_faithful_blocks)
 export(shortest_distances)
 export(simulate_blockchain)
