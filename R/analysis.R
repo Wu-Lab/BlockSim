@@ -46,4 +46,19 @@ block_discords <- function(adj_matrix)
   }
   discords
 }
-  
+
+
+#' Calculate the length of main chain
+#' 
+#' 
+#' @import igraph
+#' 
+#' @export
+length_of_main_chain <- function(adj_matrix)
+{
+  w <- adj_matrix
+  w[w == 1] <- -1
+  g <- graph_from_adjacency_matrix(w, mode = "directed", weighted = T)
+  d <- distances(g, 1, mode = "in", algorithm = "bellman-ford")
+  - min(d)
+}
