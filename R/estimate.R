@@ -92,19 +92,18 @@ estimate_block_distance <- function(N, block_rate, block_size, band_width = 512,
   p0 <- estimate_observable_probability(N, block_rate, block_size, band_width, gamma_shape)
   p1 <- estimate_reachable_probability(N, block_rate, block_size, band_width, gamma_shape)
   p2 <- estimate_tip_probability(N, block_rate, block_size, band_width, gamma_shape)
-  p3 <- p0 * p2
+  p0 <- p0 * p2
 
   d[1] <- 1
   if (N >= 2)
   {
     for (i in 2:N)
     {
-      p4 <- p3[(i-1):1] * p1[1:(i-1)]
-      p4 <- c(1, cumprod(1 - p4))[1:(i-1)] * p4
-      p4 <- p4 / sum(p4)
-      p5 <- c(p2[i] * p0[i], (1 - p2[i]) * p4)
-      d[i] <- sum(p5 * c(1, d[1:(i-1)] + 1)) / sum(p5)
-      print(c(sum(p5), p1[i]))
+      p <- p0[(i-1):1] * p1[1:(i-1)]
+      p <- c(1, cumprod(1 - p))[1:(i-1)] * p
+      p[i-1] <- p[i-1] + (1 - sum(p))
+      p <- c(p0[i], (1 - p2[i]) * p)
+      d[i] <- sum(p * c(1, d[1:(i-1)] + 1)) / sum(p)
     }
   }
   d
