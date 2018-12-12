@@ -108,3 +108,24 @@ estimate_block_distance <- function(N, block_rate, block_size, band_width = 512,
   }
   d
 }
+
+
+#' Estimate maximum block discord
+#' 
+#' 
+#' @export
+estimate_max_block_discord <- function(block_rate, block_size, band_width = 512, gamma_shape = 2, p = 0.9999999999)
+{
+  if (block_rate <= 0) return(0)
+  
+  k <- 10
+  repeat
+  {
+    reach_probs <- estimate_reachable_probability(k, block_rate, block_size, band_width, gamma_shape)
+    if (reach_probs[k] >= p) break
+    k <- k * 2
+  }
+  N <- min(which(reach_probs >= p))
+  d <- estimate_block_distance(N, block_rate, block_size, band_width, gamma_shape)
+  ceiling(d[N]) * 2
+}
