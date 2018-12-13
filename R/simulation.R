@@ -14,6 +14,8 @@
 #'   \item{adj_mat}{The adjacent matrix of generated blockchain.}
 #'   \item{block_info}{A list that contains information of blockchain and blocks.}
 #'
+#' @import Matrix
+#'
 #' @export
 simulate_blockchain <- function(n, attack_power = 0, t1 = ceiling(1/3*n), t2 = ceiling(2/3*n), 
                                 n_miners = 10000, block_rate = 1/600, block_size = 1,
@@ -56,7 +58,7 @@ simulate_blockchain <- function(n, attack_power = 0, t1 = ceiling(1/3*n), t2 = c
 
   block_info$visible_probs <- block_visible_probs(n, block_rate, block_size) 
 
-  A <- matrix(0, nrow = n, ncol = n)
+  A <- Matrix(0, nrow = n, ncol = n)
   for (i in 2:n)
   {
     if (block_info$labels[i, 2] == 0)
