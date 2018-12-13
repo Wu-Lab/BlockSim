@@ -15,10 +15,10 @@ SEXP BS_ShortestDistances(SEXP _Edges, SEXP _Index, SEXP _SourceNodes)
   int nNodes = length(_SourceNodes);
   
   SEXP _Dist;
-  PROTECT(_Dist = NEW_INTEGER(nNodes * nNodes));
+  PROTECT(_Dist = NEW_NUMERIC(nNodes * nNodes));
   SetDim2(_Dist, nNodes, nNodes);
-  int *Dist = INTEGER_POINTER(_Dist);
-  SetValues(_Dist, Dist, -1);
+  double *Dist = NUMERIC_POINTER(_Dist);
+  SetValues(_Dist, Dist, R_PosInf);
   
   int *queue = (int *) R_alloc(nNodes, sizeof(int));
   int queue_head, queue_tail;
@@ -39,7 +39,7 @@ SEXP BS_ShortestDistances(SEXP _Edges, SEXP _Index, SEXP _SourceNodes)
       for (int i = Index[n]; i < Index[n+1]; i++)
       {
         int t = Edges[nEdges + i] - 1;
-        if (Dist[s + t * nNodes] < 0)
+        if (Dist[s + t * nNodes] == R_PosInf)
         {
           queue[queue_tail++] = t;
           Dist[s + t * nNodes] = d;
