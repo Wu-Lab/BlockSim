@@ -35,13 +35,19 @@ block_discords <- function(adj_matrix)
   n <- dim(adj_matrix)[1]
   discords <- matrix(0, n, n)
   x <- shortest_distances(adj_matrix)
-  tips <- colSums(adj_matrix) == 0
+  d <- apply(x[colSums(adj_matrix) == 0, , drop = F], 2, min)
+  past <- lapply(1:n, function(i) x[i, ] < Inf)
+  future <- lapply(1:n, function(i) x[, i] < Inf)
   for (i in 2:n)
   {
     for (j in 1:(i-1))
     {
       if (x[i, j] == Inf && x[j, i] == Inf)
-        discords[i, j] <- discords[j, i] <- min(x[i, ] + x[j, ]) + min(x[, i] + x[, j], min(x[tips, i]) + min(x[tips, j]) + 2)
+      {
+        p <- past[[i]] & past[[j]]
+        f <- future[[i]] & future[[j]]
+        discords[i, j] <- discords[j, i] <- min(x[i, p] + x[j, p]) + min(x[f, i] + x[f, j], d[i] + d[j] + 2)
+      }
     }
   }
   discords

@@ -127,5 +127,5 @@ estimate_max_block_discord <- function(block_rate, block_size, band_width = 512,
   }
   N <- min(which(reach_probs >= p))
   d <- estimate_block_distance(N, block_rate, block_size, band_width, gamma_shape)
-  ceiling(d[N]) * 2
+  ceiling(d[N] * 2)
 }
