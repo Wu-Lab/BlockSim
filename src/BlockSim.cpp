@@ -2,6 +2,7 @@
 
 const R_CallMethodDef callMethods[] = {
   {"BS_ShortestDistances", (DL_FUNC) &BS_ShortestDistances, 3},
+  {"BS_BlockTips", (DL_FUNC) &BS_BlockTips, 2},
   {NULL, NULL, 0}
 };
 

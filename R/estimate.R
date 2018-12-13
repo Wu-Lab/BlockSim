@@ -114,7 +114,7 @@ estimate_block_distance <- function(N, block_rate, block_size, band_width = 512,
 #' 
 #' 
 #' @export
-estimate_max_block_discord <- function(block_rate, block_size, band_width = 512, gamma_shape = 2, p = 0.9999999999)
+estimate_max_block_discord <- function(block_rate, block_size, band_width = 512, gamma_shape = 2, p = 0.9999)
 {
   if (block_rate <= 0) return(0)
   

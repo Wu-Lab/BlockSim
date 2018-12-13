@@ -12,4 +12,7 @@ extern "C" {
   
   /* Utils */
   SEXP BS_ShortestDistances(SEXP _Edges, SEXP _Index, SEXP _SourceNodes);
+
+  SEXP BS_BlockTips(SEXP _VisableNodes, SEXP _Matrix);
+
 }
