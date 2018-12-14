@@ -4,8 +4,8 @@
 \alias{estimate_block_distance}
 \title{Estimate block distance}
 \usage{
-estimate_block_distance(N, block_rate, block_size, band_width = 512,
-  gamma_shape = 2)
+estimate_block_distance(N, block_rate, block_size = 1,
+  band_width = 512, gamma_shape = 2)
 }
 \description{
 Estimate block distance

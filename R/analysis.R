@@ -68,3 +68,23 @@ length_of_main_chain <- function(adj_matrix)
   d <- distances(g, 1, mode = "in", algorithm = "bellman-ford")
   - min(d)
 }
+
+
+#' Calculate the transactions per block
+#' 
+#' 
+#' @export
+tx_per_block <- function(block_size = 1)
+{
+  block_size * 1024^2 / 500
+}
+
+
+#' Calculate the transactions per second
+#' 
+#' 
+#' @export
+tx_per_second <- function(effective_block_rate, block_size = 1)
+{
+  tx_per_block(block_size) * effective_block_rate
+}

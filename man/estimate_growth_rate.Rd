@@ -4,7 +4,7 @@
 \alias{estimate_growth_rate}
 \title{Estiamte the growth rate of blockchain}
 \usage{
-estimate_growth_rate(block_rate, block_size, band_width = 512,
+estimate_growth_rate(block_rate, block_size = 1, band_width = 512,
   min_term = Inf, log_eps = -1000, gamma_shape = 2)
 }
 \description{

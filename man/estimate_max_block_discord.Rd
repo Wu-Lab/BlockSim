@@ -4,8 +4,8 @@
 \alias{estimate_max_block_discord}
 \title{Estimate maximum block discord}
 \usage{
-estimate_max_block_discord(block_rate, block_size, band_width = 512,
-  gamma_shape = 2, p = 0.9999)
+estimate_max_block_discord(block_rate, block_size = 1,
+  band_width = 512, gamma_shape = 2, p = 0.9999)
 }
 \description{
 Estimate maximum block discord

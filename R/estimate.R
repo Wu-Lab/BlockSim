@@ -2,7 +2,7 @@
 #'
 #'
 #' @export
-estimate_growth_rate <- function(block_rate, block_size, band_width = 512, min_term = Inf, log_eps = -1000, gamma_shape = 2)
+estimate_growth_rate <- function(block_rate, block_size = 1, band_width = 512, min_term = Inf, log_eps = -1000, gamma_shape = 2)
 {
   if (block_rate <= 0) return(0)
   
@@ -25,7 +25,7 @@ estimate_growth_rate <- function(block_rate, block_size, band_width = 512, min_t
 #' 
 #' 
 #' @export
-estimate_observable_probability <- function(N, block_rate, block_size, band_width = 512, gamma_shape = 2)
+estimate_observable_probability <- function(N, block_rate, block_size = 1, band_width = 512, gamma_shape = 2)
 {
   if (block_rate <= 0) return(numeric(N))
   
@@ -39,7 +39,7 @@ estimate_observable_probability <- function(N, block_rate, block_size, band_widt
 #' 
 #' 
 #' @export
-estimate_reachable_probability <- function(N, block_rate, block_size, band_width = 512, gamma_shape = 2)
+estimate_reachable_probability <- function(N, block_rate, block_size = 1, band_width = 512, gamma_shape = 2)
 {
   p <- numeric(N)
   if (block_rate <= 0) return(p)
@@ -61,7 +61,7 @@ estimate_reachable_probability <- function(N, block_rate, block_size, band_width
 #' 
 #' 
 #' @export
-estimate_tip_probability <- function(N, block_rate, block_size, band_width = 512, gamma_shape = 2)
+estimate_tip_probability <- function(N, block_rate, block_size = 1, band_width = 512, gamma_shape = 2)
 {
   p <- numeric(N)
   if (block_rate <= 0) return(p)
@@ -84,7 +84,7 @@ estimate_tip_probability <- function(N, block_rate, block_size, band_width = 512
 #' 
 #' 
 #' @export
-estimate_block_distance <- function(N, block_rate, block_size, band_width = 512, gamma_shape = 2)
+estimate_block_distance <- function(N, block_rate, block_size = 1, band_width = 512, gamma_shape = 2)
 {
   d <- rep(Inf, N)
   if (block_rate <= 0) return(d)
@@ -114,7 +114,7 @@ estimate_block_distance <- function(N, block_rate, block_size, band_width = 512,
 #' 
 #' 
 #' @export
-estimate_max_block_discord <- function(block_rate, block_size, band_width = 512, gamma_shape = 2, p = 0.9999)
+estimate_max_block_discord <- function(block_rate, block_size = 1, band_width = 512, gamma_shape = 2, p = 0.9999)
 {
   if (block_rate <= 0) return(0)
   

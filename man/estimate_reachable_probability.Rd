@@ -4,7 +4,7 @@
 \alias{estimate_reachable_probability}
 \title{Estimate reachable probability}
 \usage{
-estimate_reachable_probability(N, block_rate, block_size,
+estimate_reachable_probability(N, block_rate, block_size = 1,
   band_width = 512, gamma_shape = 2)
 }
 \description{
