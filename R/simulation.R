@@ -78,7 +78,7 @@ simulate_blockchain <- function(n, attack_power = 0, t1 = ceiling(1/3*n), t2 = c
 link_block_normal <- function(i, A, block_info)
 {
   v <- block_visible(i, block_info)
-  v <- block_visible_adjust(v, A)
+  v <- block_visible_adjust(i, v, A)
   block_tips(v, A)
 }
 
@@ -123,21 +123,22 @@ block_visible <- function(i, block_info)
 
 # v: the visibility status of block 1:(i-1) for block i
 # A: the current adjacent matrix before block i is added
-block_visible_adjust <- function(v, A)
+block_visible_adjust <- function(i, v, A)
 {
   v0 <- v
-  v1 <- v
-  while (length(v1) > 0) {
-    v1 <- which(colSums(A[v1, , drop = F]) > 0)
-    v1 <- setdiff(v1, v0)
-    v0 <- union(v0, v1)
+  v1 <- complement(i-1, v)
+  while (length(v0) > 0 && length(v1) > 0) {
+    x <- colSums(A[v0, v1, drop = F]) > 0
+    v0 <- v1[x]
+    v1 <- v1[!x]
+    v <- c(v, v0)
   }
 # return the adjusted visible status of block 1:(i-1)
-  v0
+  v
 }
 
 
 block_tips <- function(v, A)
 {
-  v[which(colSums(A[v, v, drop = F]) == 0)]
+  v[colSums(A[v, v, drop = F]) == 0]
 }

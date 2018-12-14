@@ -2,6 +2,7 @@
 
 export(block_discords)
 export(block_distances)
+export(complement)
 export(estimate_block_distance)
 export(estimate_growth_rate)
 export(estimate_max_block_discord)
