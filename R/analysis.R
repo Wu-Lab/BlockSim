@@ -62,9 +62,8 @@ block_discords <- function(adj_matrix)
 #' @export
 length_of_main_chain <- function(adj_matrix)
 {
-  w <- adj_matrix
-  w[w == 1] <- -1
-  g <- graph_from_adjacency_matrix(w, mode = "directed", weighted = T)
+  g <- graph_from_edgelist(which(adj_matrix == 1, arr.ind = T), directed = T)
+  edge_attr(g, "weight") <- -1
   d <- distances(g, 1, mode = "in", algorithm = "bellman-ford")
   - min(d)
 }
