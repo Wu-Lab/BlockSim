@@ -2,22 +2,24 @@
 #'
 #'
 #' @export
-estimate_growth_rate <- function(block_rate, block_size = 1, band_width = 512, min_term = Inf, log_eps = -1000, gamma_shape = 2)
+estimate_growth_rate <- function(block_rate, block_size = 1, band_width = 512, eps = 1e-100, gamma_shape = 2)
 {
   if (block_rate <= 0) return(0)
   
   delay <- block_size * 1024 * 8 / band_width
   scale <- delay/(gamma_shape-1)
   k <- 10
-  p1 <- pgamma((0:(k-1))/block_rate, shape = gamma_shape, scale = scale, lower.tail = F, log.p = T)
-  while (k < min_term && p1[length(p1)] > log_eps)
+  p0 <- pgamma((1:k)/block_rate, shape = gamma_shape, scale = scale, lower.tail = T, log.p = F)
+  p1 <- cumprod(c(1, 1 - p0[1:(k-1)]))
+  p <- p0 * p1
+  while (p[k] > eps)
   {
-    p1 <- c(p1, pgamma((k:(2*k-1))/block_rate, shape = gamma_shape, scale = scale, lower.tail = F, log.p = T))
-    k <- k * 2
+    k <- k + 1
+    p0 <- c(p0, pgamma(k/block_rate, shape = gamma_shape, scale = scale, lower.tail = T, log.p = F))
+    p1 <- c(p1, p1[k-1] * (1 - p0[k-1]))
+    p <- p0 * p1
   }
-  p0 <- pgamma((1:k)/block_rate, shape = gamma_shape, scale = scale, lower.tail = T, log.p = T)
-  s <- (block_rate/(1:k)) * exp(p0 + cumsum(p1))
-  sum(s)
+  sum(block_rate / (1:k) * p)
 }
 
 

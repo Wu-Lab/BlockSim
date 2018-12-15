@@ -5,7 +5,7 @@
 \title{Estiamte the growth rate of blockchain}
 \usage{
 estimate_growth_rate(block_rate, block_size = 1, band_width = 512,
-  min_term = Inf, log_eps = -1000, gamma_shape = 2)
+  eps = 1e-100, gamma_shape = 2)
 }
 \description{
 Estiamte the growth rate of blockchain
