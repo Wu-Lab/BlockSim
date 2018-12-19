@@ -4,7 +4,7 @@
 \alias{block_distances}
 \title{Calculate block distances}
 \usage{
-block_distances(adj_matrix)
+block_distances(adj_matrix, block_weight = NULL, dist_matrix = NULL)
 }
 \description{
 Calculate block distances

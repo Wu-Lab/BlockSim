@@ -4,7 +4,7 @@
 \alias{find_faithful_blocks}
 \title{Find faithful blocks}
 \usage{
-find_faithful_blocks(adj_matrix, max_discord = 10)
+find_faithful_blocks(adj_matrix, max_discord = 10, dist_matrix = NULL)
 }
 \description{
 Find faithful blocks

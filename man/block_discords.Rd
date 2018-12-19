@@ -4,7 +4,7 @@
 \alias{block_discords}
 \title{Calculate block discords}
 \usage{
-block_discords(adj_matrix)
+block_discords(adj_matrix, dist_matrix = NULL)
 }
 \description{
 Calculate block discords
