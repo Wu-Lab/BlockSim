@@ -19,7 +19,8 @@
 #' @export
 simulate_blockchain <- function(n, attack_power = 0, t1 = ceiling(1/3*n), t2 = ceiling(2/3*n), 
                                 n_miners = 10000, block_rate = 1/600, block_size = 1,
-                                n_genesis_blocks = 1, burn_in = n_genesis_blocks)
+                                n_genesis_blocks = 1, burn_in = n_genesis_blocks,
+                                fixed_block_interval = TRUE)
 {
   if (n_genesis_blocks <= 1) n_genesis_blocks <- 1
   if (burn_in <= 1) burn_in <- 1
@@ -31,6 +32,7 @@ simulate_blockchain <- function(n, attack_power = 0, t1 = ceiling(1/3*n), t2 = c
   block_info$block_size <- block_size
   block_info$n_genesis_blocks <- n_genesis_blocks
   block_info$burn_in <- burn_in
+  block_info$fixed_block_interval <- fixed_block_interval
   
   block_info$attack <- list()
   block_info$attack$power <- attack_power
@@ -41,8 +43,8 @@ simulate_blockchain <- function(n, attack_power = 0, t1 = ceiling(1/3*n), t2 = c
   block_info$miners <- runif(n_miners) < attack_power
   block_info$miners[1] <- 0
 
-  block_info$labels <- matrix(0, nrow = n, ncol = 3)
-  colnames(block_info$labels) <- c("Miner_ID", "Group_ID", "Public_Time")
+  block_info$labels <- matrix(0, nrow = n, ncol = 4)
+  colnames(block_info$labels) <- c("Miner_ID", "Group_ID", "Public_Time", "Interval")
 
   # block miners
   block_info$labels[, 1] <- sample.int(n_miners, n, replace = T)
@@ -56,7 +58,10 @@ simulate_blockchain <- function(n, attack_power = 0, t1 = ceiling(1/3*n), t2 = c
   block_info$labels[, 3] <- 1:n
   block_info$labels[1:t2, 3][block_info$labels[1:t2, 2] == 1] <- t2
 
-  block_info$visible_probs <- block_visible_probs(n, block_rate, block_size) 
+  # block interval (in seconds) to last block
+  block_info$labels[, 4] <- rexp(n, block_rate)
+  
+  block_info$visible_probs <- block_visible_probs((1:n)/block_rate, block_rate, block_size) 
 
   A <- Matrix(0, nrow = n, ncol = n)
   for (i in 2:n)
@@ -99,12 +104,12 @@ link_block_attack <- function(i, A, block_info)
 }
 
 
-block_visible_probs <- function(n, block_rate = 1/600, block_size = 1, band_width = 512)
+block_visible_probs <- function(t, block_rate = 1/600, block_size = 1, band_width = 512)
 {
   shape <- 2
   delay <- block_size * 1024 * 8 / band_width
   scale <- delay/(shape-1)
-  pgamma((1:n)/block_rate, shape=shape, scale=scale, lower.tail = T, log.p = F)
+  pgamma(t, shape=shape, scale=scale, lower.tail = T, log.p = F)
 }
 
 
@@ -114,7 +119,15 @@ block_visible <- function(i, block_info)
   t <- i - block_info$labels[1:(i-1), 3]
   p <- numeric(i-1)
   p[t <= 0] <- 0
-  p[t > 0] <- block_info$visible_probs[t[t > 0]]
+  if (block_info$fixed_block_interval)
+  {
+    p[t > 0] <- block_info$visible_probs[t[t > 0]]
+  }
+  else
+  {
+    interval <- rev(cumsum(block_info$labels[i:2, 4]))
+    p[t > 0] <- block_visible_probs(interval[t > 0])
+  }
   p[1] <- 1
   p[block_info$labels[1:(i-1), 1] == block_info$labels[i, 1]] <- 1
   which(runif(i-1) < p)
