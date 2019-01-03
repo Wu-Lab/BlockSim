@@ -59,7 +59,7 @@ simulate_blockchain <- function(n, attack_power = 0, t1 = ceiling(1/3*n), t2 = c
   block_info$labels[1:t2, 3][block_info$labels[1:t2, 2] == 1] <- t2
 
   # block interval (in seconds) to last block
-  block_info$labels[, 4] <- rexp(n, block_rate)
+  block_info$labels[, 4] <- if(fixed_block_interval) 1/block_rate else rexp(n, block_rate)
   
   block_info$visible_probs <- block_visible_probs((1:n)/block_rate, block_rate, block_size) 
 

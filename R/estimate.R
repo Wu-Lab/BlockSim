@@ -101,8 +101,8 @@ estimate_block_distance <- function(N, block_rate, block_size = 1, band_width = 
   {
     for (i in 2:N)
     {
-      p <- p0[(i-1):1] * p1[1:(i-1)]
-      p <- p / cumsum(p[(i-1):1])[(i-1):1]
+      p <- p0[1:(i-1)] * p1[(i-1):1]
+      p <- rev(p / cumsum(p))
       p <- c(1, cumprod(1 - p))[1:(i-1)] * p
       p <- c(p0[i], (1 - p2[i]) * p)
       d[i] <- sum(p * c(1, d[1:(i-1)] + 1)) / sum(p)
