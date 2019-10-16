@@ -91,20 +91,16 @@ estimate_block_distance <- function(N, block_rate, block_size = 1, band_width = 
   d <- rep(Inf, N)
   if (block_rate <= 0) return(d)
 
-  p0 <- estimate_observable_probability(N, block_rate, block_size, band_width, gamma_shape)
   p1 <- estimate_reachable_probability(N, block_rate, block_size, band_width, gamma_shape)
   p2 <- estimate_tip_probability(N, block_rate, block_size, band_width, gamma_shape)
-  p0 <- p0 * p2
 
   d[1] <- 1
   if (N >= 2)
   {
     for (i in 2:N)
     {
-      p <- p0[1:(i-1)] * p1[(i-1):1]
-      p <- rev(p / cumsum(p))
-      p <- c(1, cumprod(1 - p))[1:(i-1)] * p
-      p <- c(p0[i], (1 - p2[i]) * p)
+      p <- c(p2[i], p1[1:(i-1)] * p2[(i-1):1])
+      p <- c(1, cumprod(1 - p))[1:i] * p
       d[i] <- sum(p * c(1, d[1:(i-1)] + 1)) / sum(p)
     }
   }
@@ -127,7 +123,11 @@ estimate_max_block_discord <- function(block_rate, block_size = 1, band_width = 
     if (reach_probs[k] >= confidence) break
     k <- k * 2
   }
-  N <- max(which(reach_probs < confidence))
-  d <- estimate_block_distance(N, block_rate, block_size, band_width, gamma_shape)
-  ceiling((d[N] + 1) * 2)
+  N <- min(which(reach_probs >= confidence)) - 1
+  if (N <= 0) 4
+  else
+  {
+    d <- estimate_block_distance(N, block_rate, block_size, band_width, gamma_shape)
+    ceiling((d[N] + 2) * 2)
+  }
 }
