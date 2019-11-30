@@ -4,10 +4,18 @@
 \alias{simulate_blockchain}
 \title{Simulate a blockchain}
 \usage{
-simulate_blockchain(n, attack_power = 0, t1 = ceiling(1/3 * n),
-  t2 = ceiling(2/3 * n), n_miners = 10000, block_rate = 1/600,
-  block_size = 1, n_genesis_blocks = 1, burn_in = n_genesis_blocks,
-  fixed_block_interval = TRUE)
+simulate_blockchain(
+  n,
+  attack_power = 0,
+  t1 = ceiling(1/3 * n),
+  t2 = ceiling(2/3 * n),
+  n_miners = 10000,
+  block_rate = 1/600,
+  block_size = 1,
+  n_genesis_blocks = 1,
+  burn_in = n_genesis_blocks,
+  fixed_block_interval = TRUE
+)
 }
 \arguments{
 \item{n}{the size of blockchain, i.e. the total number of blocks in the blockchain}

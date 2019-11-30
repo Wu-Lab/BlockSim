@@ -4,8 +4,13 @@
 \alias{estimate_observable_probability}
 \title{Estimate observable probability}
 \usage{
-estimate_observable_probability(N, block_rate, block_size = 1,
-  band_width = 512, gamma_shape = 2)
+estimate_observable_probability(
+  N,
+  block_rate,
+  block_size = 1,
+  band_width = 512,
+  gamma_shape = 2
+)
 }
 \description{
 Estimate observable probability

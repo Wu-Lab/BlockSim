@@ -4,8 +4,13 @@
 \alias{estimate_tip_probability}
 \title{Estimate tip probability}
 \usage{
-estimate_tip_probability(N, block_rate, block_size = 1,
-  band_width = 512, gamma_shape = 2)
+estimate_tip_probability(
+  N,
+  block_rate,
+  block_size = 1,
+  band_width = 512,
+  gamma_shape = 2
+)
 }
 \description{
 Estimate tip probability

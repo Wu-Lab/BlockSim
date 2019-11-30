@@ -9,7 +9,7 @@ maxcord <- function(adj_matrix, max_discord = 10)
   weight <- numeric(dim(adj_matrix)[1])
   weight[fb] <- 1
   past_future <- block_distances(adj_matrix, weight, dist_matrix)
-  order(order(past_future$future, weight, -past_future$past, decreasing = T, na.last = T))
+  order(order(past_future$future, weight, -past_future$past, decreasing = TRUE, na.last = TRUE))
 }
 
 
@@ -60,7 +60,7 @@ block_discords <- function(adj_matrix, dist_matrix = NULL)
   else x <- dist_matrix
   n <- dim(adj_matrix)[1]
   discords <- matrix(0, n, n)
-  d <- apply(x[colSums(adj_matrix) == 0, , drop = F], 2, min)
+  d <- apply(x[colSums(adj_matrix) == 0, , drop = FALSE], 2, min)
   past <- lapply(1:n, function(i) x[i, ] < Inf)
   future <- lapply(1:n, function(i) x[, i] < Inf)
   for (i in 2:n)
@@ -87,7 +87,7 @@ block_discords <- function(adj_matrix, dist_matrix = NULL)
 #' @export
 length_of_main_chain <- function(adj_matrix)
 {
-  g <- graph_from_edgelist(which(adj_matrix == 1, arr.ind = T), directed = T)
+  g <- graph_from_edgelist(which(adj_matrix == 1, arr.ind = TRUE), directed = TRUE)
   edge_attr(g, "weight") <- -1
   d <- distances(g, 1, mode = "in", algorithm = "bellman-ford")
   - min(d)

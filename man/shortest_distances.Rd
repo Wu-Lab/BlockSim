@@ -4,8 +4,10 @@
 \alias{shortest_distances}
 \title{Calculate shortest distances of unweighted graph}
 \usage{
-shortest_distances(adj_matrix, source_nodes = rep_len(TRUE,
-  dim(adj_matrix)[1]))
+shortest_distances(
+  adj_matrix,
+  source_nodes = rep_len(TRUE, dim(adj_matrix)[1])
+)
 }
 \arguments{
 \item{adj_matrix}{Logical adjacency matrix of given unweighted graph}

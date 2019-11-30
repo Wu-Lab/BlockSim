@@ -9,7 +9,7 @@
 #' @export
 complement <- function(n, v)
 {
-  x <- rep_len(T, n)
-  x[v] <- F
+  x <- rep_len(TRUE, n)
+  x[v] <- FALSE
   which(x)
 }

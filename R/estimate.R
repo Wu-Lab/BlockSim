@@ -9,13 +9,13 @@ estimate_growth_rate <- function(block_rate, block_size = 1, band_width = 512, e
   delay <- block_size * 1024 * 8 / band_width
   scale <- delay/(gamma_shape-1)
   k <- 10
-  p0 <- pgamma((1:k)/block_rate, shape = gamma_shape, scale = scale, lower.tail = T, log.p = F)
+  p0 <- pgamma((1:k)/block_rate, shape = gamma_shape, scale = scale, lower.tail = TRUE, log.p = FALSE)
   p1 <- cumprod(c(1, 1 - p0[1:(k-1)]))
   p <- p0 * p1
   while (p[k] > eps)
   {
     k <- k + 1
-    p0 <- c(p0, pgamma(k/block_rate, shape = gamma_shape, scale = scale, lower.tail = T, log.p = F))
+    p0 <- c(p0, pgamma(k/block_rate, shape = gamma_shape, scale = scale, lower.tail = TRUE, log.p = FALSE))
     p1 <- c(p1, p1[k-1] * (1 - p0[k-1]))
     p <- p0 * p1
   }
@@ -33,7 +33,7 @@ estimate_observable_probability <- function(N, block_rate, block_size = 1, band_
   
   delay <- block_size * 1024 * 8 / band_width
   scale <- delay/(gamma_shape-1)
-  pgamma((1:N)/block_rate, shape = gamma_shape, scale = scale, lower.tail = T, log.p = F)
+  pgamma((1:N)/block_rate, shape = gamma_shape, scale = scale, lower.tail = TRUE, log.p = FALSE)
 }
 
 

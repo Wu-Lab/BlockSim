@@ -11,5 +11,5 @@ Suggests:
 License: GPL (>= 2)
 BugReports: https://github.com/wulingyun/BlockSim/issues
 URL: https://github.com/wulingyun/BlockSim
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1
 Encoding: UTF-8
